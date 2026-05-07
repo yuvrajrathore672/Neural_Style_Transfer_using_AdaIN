@@ -2,8 +2,8 @@ import torch
 from torch.utils.data import DataLoader
 from pathlib import Path
 import argparse
-from NST_code.utils.utlis import *
-from NST_code.utils.models import *
+from utils.utlis import *
+from utils.models import *
 import torch.optim as optim 
 from tqdm import tqdm 
 from torchvision.utils import save_image
