@@ -1,0 +1,6 @@
+.vscode/
+env/
+train_3.zip
+test2017.zip
+__pycache__/
+*.pyc
