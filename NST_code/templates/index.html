@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>StyleForge AI</title>
+
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+    }
+
+    html{
+      scroll-behavior:smooth;
+    }
+
+    body{
+      background:#0b0b11;
+      color:#f1f1f1;
+      font-family:Georgia, serif;
+      overflow-x:hidden;
+    }
+
+    /* ===== HEADER ===== */
+
+    header{
+      width:100%;
+      height:65px;
+      position:sticky;
+      top:0;
+      z-index:1000;
+
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+
+      padding:0 60px;
+
+      background:rgba(10,10,18,0.92);
+      backdrop-filter:blur(10px);
+
+      border-bottom:1px solid #22223a;
+    }
+
+    .logo{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      text-decoration:none;
+    }
+
+    .logo-icon{
+      font-size:1.6rem;
+    }
+
+    .logo-text{
+      color:#ffffff;
+      font-size:1.1rem;
+      letter-spacing:2px;
+      text-transform:uppercase;
+    }
+
+    nav{
+      display:flex;
+      align-items:center;
+      gap:40px;
+    }
+
+    nav a{
+      text-decoration:none;
+      color:#9a9a9a;
+      font-size:0.92rem;
+      letter-spacing:1px;
+      transition:0.25s;
+    }
+
+    nav a:hover{
+      color:#c084fc;
+    }
+
+    /* ===== PAGE ===== */
+
+    .page{
+      width:100%;
+      max-width:980px;
+      margin:auto;
+      padding:50px 24px 120px;
+    }
+
+    /* ===== HERO ===== */
+
+    .hero{
+      text-align:center;
+      margin-bottom:50px;
+      scroll-margin-top:120px;
+    }
+
+    .hero h1{
+      font-size:2.8rem;
+      color:#c084fc;
+      letter-spacing:4px;
+      margin-bottom:10px;
+      text-transform:uppercase;
+    }
+
+    .hero p{
+      color:#888;
+      font-size:0.9rem;
+      letter-spacing:1px;
+    }
+
+    /* ===== MAIN CARD ===== */
+
+    .main-card{
+      width:100%;
+      background:#15151d;
+      border:1px solid #26263d;
+      border-radius:18px;
+      padding:24px;
+      margin-bottom:90px;
+
+      box-shadow:
+      0 0 30px rgba(0,0,0,0.35);
+    }
+
+    /* ===== ERROR ===== */
+
+    .error-box{
+      width:100%;
+      background:#3b1212;
+      border:1px solid #ff5757;
+      color:#ffc1c1;
+      padding:16px;
+      border-radius:10px;
+      margin-bottom:24px;
+      font-size:0.92rem;
+    }
+
+    /* ===== GRID ===== */
+
+    .upload-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:30px;
+      margin-bottom:35px;
+    }
+
+    /* ===== BOX ===== */
+
+    .upload-box{
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+    }
+
+    .upload-title{
+      color:#9b9b9b;
+      font-size:0.78rem;
+      text-transform:uppercase;
+      letter-spacing:2px;
+    }
+
+    .drop-zone{
+      width:100%;
+      height:220px;
+
+      background:#0f0f15;
+      border:2px dashed #34344e;
+      border-radius:16px;
+
+      position:relative;
+      overflow:hidden;
+
+      display:flex;
+      align-items:center;
+      justify-content:center;
+
+      transition:0.25s;
+    }
+
+    .drop-zone:hover{
+      border-color:#7c3aed;
+    }
+
+    .drop-zone span{
+      color:#5a5a6f;
+      font-size:0.95rem;
+      text-align:center;
+      padding:20px;
+    }
+
+    .drop-zone img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      position:absolute;
+      inset:0;
+    }
+
+    .drop-zone input{
+      position:absolute;
+      inset:0;
+      opacity:0;
+      cursor:pointer;
+    }
+
+    .upload-btn{
+      width:100%;
+      padding:11px;
+
+      border:none;
+      border-radius:12px;
+
+      background:#7c3aed;
+      color:white;
+
+      cursor:pointer;
+
+      text-transform:uppercase;
+      letter-spacing:2px;
+      font-size:0.82rem;
+
+      transition:0.25s;
+    }
+
+    .upload-btn:hover{
+      background:#9256ff;
+    }
+
+    /* ===== SLIDER ===== */
+
+    .slider-wrapper{
+      margin-bottom:35px;
+    }
+
+    .slider-title{
+      color:#9b9b9b;
+      font-size:0.78rem;
+      text-transform:uppercase;
+      letter-spacing:2px;
+      margin-bottom:16px;
+    }
+
+    .slider-row{
+      display:flex;
+      align-items:center;
+      gap:16px;
+    }
+
+    .slider-row input{
+      flex:1;
+    }
+
+    input[type="range"]{
+      appearance:none;
+      height:7px;
+      border-radius:20px;
+      background:linear-gradient(to right,#7c3aed,#c084fc);
+      outline:none;
+    }
+
+    input[type="range"]::-webkit-slider-thumb{
+      appearance:none;
+      width:20px;
+      height:20px;
+      border-radius:50%;
+      background:white;
+      border:3px solid #7c3aed;
+      cursor:pointer;
+    }
+
+    .slider-value{
+      min-width:50px;
+      color:#c084fc;
+      font-size:1rem;
+    }
+
+    /* ===== TRANSFER BUTTON ===== */
+
+    .transfer-btn{
+      width:100%;
+      padding:14px;
+
+      border:none;
+      border-radius:16px;
+
+      background:linear-gradient(135deg,#7c3aed,#c084fc);
+      color:white;
+
+      cursor:pointer;
+
+      text-transform:uppercase;
+      letter-spacing:3px;
+      font-size:0.9rem;
+      font-weight:bold;
+
+      transition:0.25s;
+
+      margin-bottom:45px;
+    }
+
+    .transfer-btn:hover:not(:disabled){
+      opacity:0.9;
+      transform:translateY(-2px);
+    }
+
+    .transfer-btn:disabled{
+      opacity:0.6;
+      cursor:not-allowed;
+    }
+
+    /* ===== OUTPUT ===== */
+
+    .output-title{
+      color:#9b9b9b;
+      font-size:0.78rem;
+      text-transform:uppercase;
+      letter-spacing:2px;
+      margin-bottom:16px;
+    }
+
+    .output-box{
+      width:100%;
+      height:360px;
+
+      background:#0f0f15;
+      border:1px solid #303048;
+      border-radius:18px;
+
+      overflow:hidden;
+
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .output-box img{
+      width:100%;
+      height:100%;
+      object-fit:contain;
+    }
+
+    .output-placeholder{
+      color:#55556d;
+      font-size:1rem;
+      text-align:center;
+      padding:20px;
+    }
+
+    /* ===== EXAMPLES ===== */
+
+    .examples-section{
+      scroll-margin-top:120px;
+    }
+
+    .examples-title{
+      text-align:center;
+      color:#c084fc;
+      font-size:2rem;
+      letter-spacing:4px;
+      margin-bottom:50px;
+      text-transform:uppercase;
+    }
+
+    .example-card{
+      width:100%;
+
+      background:#15151d;
+      border:1px solid #26263d;
+
+      border-radius:22px;
+
+      padding:28px;
+
+      margin-bottom:35px;
+    }
+
+    .example-label{
+      color:#c084fc;
+      font-size:0.82rem;
+      text-transform:uppercase;
+      letter-spacing:2px;
+      margin-bottom:24px;
+    }
+
+    .example-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr 1fr;
+      gap:20px;
+    }
+
+    .example-col{
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+    }
+
+    .example-col span{
+      color:#8a8aa5;
+      font-size:0.72rem;
+      letter-spacing:2px;
+      text-transform:uppercase;
+    }
+
+    .example-img{
+      width:100%;
+      height:180px;
+
+      border-radius:14px;
+      overflow:hidden;
+
+      border:1px solid #2d2d44;
+      background:#0f0f15;
+    }
+
+    .example-img img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+    }
+
+    /* ===== FOOTER ===== */
+
+    footer{
+      width:100%;
+      padding:40px 20px;
+      text-align:center;
+
+      border-top:1px solid #22223a;
+
+      color:#5f5f78;
+      font-size:0.85rem;
+    }
+
+    footer span{
+      color:#c084fc;
+    }
+
+    /* ===== MOBILE ===== */
+
+    @media(max-width:900px){
+
+      .upload-grid{
+        grid-template-columns:1fr;
+      }
+
+      .example-grid{
+        grid-template-columns:1fr;
+      }
+
+      .hero h1{
+        font-size:2.7rem;
+      }
+
+      header{
+        padding:0 20px;
+      }
+
+      nav{
+        gap:20px;
+      }
+
+      .output-box{
+        height:350px;
+      }
+    }
+
+  </style>
+</head>
+
+<body>
+
+<!-- ===== HEADER ===== -->
+
+<header>
+
+  <a href="#home" class="logo">
+    <div class="logo-icon">🧠</div>
+    <div class="logo-text">NeuralArt</div>
+  </a>
+
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#footer">Gallery</a>
+  </nav>
+
+</header>
+
+<!-- ===== PAGE ===== -->
+
+<div class="page">
+
+  <!-- ===== HERO ===== -->
+
+  <section class="hero" id="home">
+
+    <h1>StyleForge AI</h1>
+
+    <p>
+      Redefine Reality with AI-Powered Artistry
+    </p>
+
+  </section>
+
+  <!-- ===== MAIN TOOL ===== -->
+
+  <div class="main-card">
+
+    {% if error %}
+      <div class="error-box">
+        {{ error }}
+      </div>
+    {% endif %}
+
+    <form method="POST" enctype="multipart/form-data" id="nstForm">
+
+      {{ form.hidden_tag() }}
+
+      <!-- hidden fields -->
+      {{ form.content_path(id="contentPath") }}
+      {{ form.style_path(id="stylePath") }}
+
+      <!-- ===== UPLOAD GRID ===== -->
+
+      <div class="upload-grid">
+
+        <!-- CONTENT -->
+
+        <div class="upload-box">
+
+          <div class="upload-title">
+            Content Image
+          </div>
+
+          <div class="drop-zone" id="contentZone">
+
+            {% if content_image %}
+              <img
+                src="{{ url_for('send_image', filename=content_image) }}"
+                alt="Content Preview"
+              >
+            {% else %}
+              <span>Select Content Image</span>
+            {% endif %}
+
+            <input
+              type="file"
+              name="content"
+              id="contentInput"
+              accept="image/*"
+            >
+
+          </div>
+
+          <button
+            type="button"
+            class="upload-btn"
+            onclick="document.getElementById('contentInput').click()"
+          >
+            Upload Content
+          </button>
+
+        </div>
+
+        <!-- STYLE -->
+
+        <div class="upload-box">
+
+          <div class="upload-title">
+            Style Image
+          </div>
+
+          <div class="drop-zone" id="styleZone">
+
+            {% if style_image %}
+              <img
+                src="{{ url_for('send_image', filename=style_image) }}"
+                alt="Style Preview"
+              >
+            {% else %}
+              <span>Select Style Image</span>
+            {% endif %}
+
+            <input
+              type="file"
+              name="style"
+              id="styleInput"
+              accept="image/*"
+            >
+
+          </div>
+
+          <button
+            type="button"
+            class="upload-btn"
+            onclick="document.getElementById('styleInput').click()"
+          >
+            Upload Style
+          </button>
+
+        </div>
+
+      </div>
+
+      <!-- ===== SLIDER ===== -->
+
+      <div class="slider-wrapper">
+
+        <div class="slider-title">
+          Style Strength
+        </div>
+
+        <div class="slider-row">
+
+          <!-- BUG FIX #1: changed falsy check to "is not none" so alpha=0.0 doesn't fall back to 1.0 -->
+          <input
+            type="range"
+            name="alpha"
+            id="alphaSlider"
+            min="0"
+            max="1"
+            step="0.01"
+            value="{{ form.alpha.data if form.alpha.data is not none else 1.0 }}"
+          >
+
+          <div class="slider-value" id="sliderValue">
+            {{ "%.2f"|format(form.alpha.data if form.alpha.data is not none else 1.0) }}
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- ===== SUBMIT ===== -->
+
+      <button type="submit" class="transfer-btn" id="submitBtn">
+        Transfer Style
+      </button>
+
+      <!-- ===== OUTPUT ===== -->
+
+      <div class="output-title">
+        Generated Artwork
+      </div>
+
+      <div class="output-box">
+
+        {% if result_img %}
+
+          <img
+            src="{{ url_for('send_image', filename=result_img) }}"
+            alt="Stylized Output"
+          >
+
+        {% else %}
+
+          <div class="output-placeholder">
+            Stylized image will appear here
+          </div>
+
+        {% endif %}
+
+      </div>
+
+    </form>
+
+  </div>
+
+  <!-- ===== EXAMPLES ===== -->
+
+  <section class="examples-section" id="gallery">
+
+    <div class="examples-title">
+      Examples
+    </div>
+
+    <!-- EXAMPLE 1 -->
+
+    <div class="example-card">
+
+      <div class="example-label">
+        Example 1 — 
+      </div>
+
+      <div class="example-grid">
+
+        <div class="example-col">
+
+          <span>Content</span>
+
+          <div class="example-img">
+
+            <img
+              src="{{ url_for('send_example', filename='NST_code/content_data/000000000108.jpg') }}"
+              alt="Content"
+              onerror="this.style.display='none'"
+            >
+
+          </div>
+
+        </div>
+
+        <div class="example-col">
+
+          <span>Style</span>
+
+          <div class="example-img">
+
+            <img
+              src="{{ url_for('send_example', filename='NST_code/style_data/302.jpg') }}"
+              alt="Style"
+              onerror="this.style.display='none'"
+            >
+
+          </div>
+
+        </div>
+
+        <div class="example-col">
+
+          <span>Output</span>
+
+          <div class="example-img">
+
+            <img
+              src="{{ url_for('send_example', filename='NST_code/static/uploads/stylized_000000000108.jpg') }}"
+              alt="Output"
+              onerror="this.style.display='none'"
+            >
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div class="example-card">
+
+      <div class="example-label">
+        Example 2 — 
+      </div>
+
+      <div class="example-grid">
+
+        <div class="example-col">
+
+          <span>Content</span>
+
+          <div class="example-img">
+
+            <img
+              src="{{ url_for('send_example', filename='ex2_content.jpg') }}"
+              alt="Content"
+              onerror="this.style.display='none'"
+            >
+
+          </div>
+
+        </div>
+
+        <div class="example-col">
+
+          <span>Style</span>
+
+          <div class="example-img">
+
+            <img
+              src="{{ url_for('send_example', filename='ex2_style.jpg') }}"
+              alt="Style"
+              onerror="this.style.display='none'"
+            >
+
+          </div>
+
+        </div>
+
+        <div class="example-col">
+
+          <span>Output</span>
+
+          <div class="example-img">
+
+            <img
+              src="{{ url_for('send_example', filename='ex2_output.jpg') }}"
+              alt="Output"
+              onerror="this.style.display='none'"
+            >
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+    
+
+  </section>
+
+</div>
+
+<!-- ===== FOOTER ===== -->
+
+<footer id="footer">
+  © 2026 <span>NeuralArt</span> · Built with Python · PyTorch · Flask · 
+</footer>
+
+<script>
+
+  /* ===== SLIDER ===== */
+
+  const slider = document.getElementById("alphaSlider");
+  const sliderValue = document.getElementById("sliderValue");
+
+  slider.addEventListener("input", () => {
+    sliderValue.textContent = parseFloat(slider.value).toFixed(2);
+  });
+
+  /* ===== PREVIEW =====
+     BUG FIX #2: original code did zone.innerHTML = "" which destroyed the
+     file input element from the DOM. Now we only remove the old preview
+     img and placeholder span, then insertBefore the input so the input
+     is never touched. */
+
+  function setupPreview(inputId, zoneId){
+
+    const input = document.getElementById(inputId);
+    const zone  = document.getElementById(zoneId);
+
+    input.addEventListener("change", function(){
+
+      const file = this.files[0];
+
+      if(!file) return;
+
+      const reader = new FileReader();
+
+      reader.onload = function(e){
+
+        // Remove old preview image if it exists
+        const oldImg = zone.querySelector("img");
+        if(oldImg) oldImg.remove();
+
+        // Remove placeholder span if it exists
+        const oldSpan = zone.querySelector("span");
+        if(oldSpan) oldSpan.remove();
+
+        // Create new preview image
+        const img = document.createElement("img");
+        img.src = e.target.result;
+
+        // Insert before the input — keeps input safely in DOM and on top
+        zone.insertBefore(img, input);
+      };
+
+      reader.readAsDataURL(file);
+    });
+  }
+
+  setupPreview("contentInput", "contentZone");
+  setupPreview("styleInput", "styleZone");
+
+  /* ===== LOADING STATE =====
+     BUG FIX #3: no feedback during inference (style transfer takes seconds).
+     Disable the button and show "Processing..." so user knows it's working. */
+
+  document.getElementById("nstForm").addEventListener("submit", function(){
+    const btn = document.getElementById("submitBtn");
+    btn.textContent = "Processing…";
+    btn.disabled = true;
+  });
+
+</script>
+
+</body>
+</html>

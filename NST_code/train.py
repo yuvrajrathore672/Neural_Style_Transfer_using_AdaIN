@@ -2,7 +2,7 @@ import torch
 from torch.utils.data import DataLoader
 from pathlib import Path
 import argparse
-from utils.utlis import *
+from utils.utils import *
 from utils.models import *
 import torch.optim as optim 
 from tqdm import tqdm 
@@ -11,13 +11,13 @@ from torchvision.utils import save_image
 def parse_argument():
     parser = argparse.ArgumentParser()
 
-    parser.add_argument('--content_dir', type=str, default= 'C:/Users/gokup/OneDrive/Desktop/NST/content_data',
+    parser.add_argument('--content_dir', type=str, default= 'C:/Users/gokup/OneDrive/Desktop/NST/NST_code/content_data',
                         help='Location of content data')
     
-    parser.add_argument('--style_dir',type=str,default="C:/Users/gokup/OneDrive/Desktop/NST/style_data",
+    parser.add_argument('--style_dir',type=str,default="C:/Users/gokup/OneDrive/Desktop/NST/NST_code/style_data",
                         help ='Location of style dataset')
     
-    parser.add_argument('--vgg',type=str,default="C:/Users/gokup/OneDrive/Desktop/NST/vgg_normalised.pth",
+    parser.add_argument('--vgg',type=str,default="C:/Users/gokup/OneDrive/Desktop/NST/NST_code/vgg_normalised.pth",
                         help='Location of pre-trained Vgg')
     
     parser.add_argument('--experiment',type=str, default="experiment_1",
@@ -44,7 +44,9 @@ def parse_argument():
     parser.add_argument('--lr_decay',type=float, default=5e-5,
                         help='Learning rate decay')
     
-    parser.add_argument('--epochs',type=int, default=1,
+    parser.add_argument('--epochs',type=int, default=10,
+                        help='Number of epochs')
+    parser.add_argument('--start_epochs',type=int, default=0,
                         help='Number of epochs')
     
     parser.add_argument('--content_weight', type=float , default=1.0,
@@ -65,7 +67,7 @@ def parse_argument():
     parser.add_argument('--decoder_path',type=str,default=None,
                         help='Path to decoder checkpoint')
     
-    parser.add_argument('--opitmizer_path',type=str,default=None,
+    parser.add_argument('--optimizer_path',type=str,default=None,
                         help='Path to optimizer checkpoint')
     
 
@@ -104,13 +106,13 @@ def main():
     content_dataloader = DataLoader(content_dataset,
                                 batch_size= args.batch_size,
                                 shuffle=True,
-                                # pin_memory=True,
+                                pin_memory=True,
                                 drop_last=True)
 
     style_dataloader = DataLoader(style_dataset,
                               batch_size= args.batch_size,
                               shuffle=True ,
-                            #   pin_memory=True,
+                              pin_memory=True,
                               drop_last=True)
 
 
@@ -128,8 +130,8 @@ def main():
 
     #checkpoint loader
     if args.resume:
-        decoder.load_state_dict(torch.load(args.decoder_path))
-        optimizer.load_state_dict(torch.load(args.optimizer_path))
+        decoder.load_state_dict(torch.load(args.decoder_path,map_location=torch.device('cpu')))
+        optimizer.load_state_dict(torch.load(args.optimizer_path,map_location=torch.device('cpu')))
 
 
     # Train our model 
@@ -143,7 +145,7 @@ def main():
     running_content_loss = None 
     running_style_loss = None 
 
-    for epoch in range(args.epochs):
+    for epoch in range(args.start_epochs,args.epochs):
         progress_bar = tqdm(zip(content_dataloader, style_dataloader),
                             total= min(len(content_dataloader), len(style_dataloader)))
         
