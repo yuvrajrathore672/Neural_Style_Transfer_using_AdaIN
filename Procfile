@@ -1,1 +1,0 @@
-web: gunicorn --bind 0.0.0.0:$PORT --chdir NST_code app:app
